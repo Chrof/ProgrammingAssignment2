@@ -1,23 +1,27 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+#Calculates the iiverse of a matrix and stores it in the cache for later use.
 
 # creates a matric object for caching the inverse
 makeCacheMatrix <- function(x = matrix()) {
-        
-                m <- NULL # setup of matrix
+                # setup of cache                
+                m <- NULL 
+               
                 set <- function(y) {
                         x <<- y
                         m <<- NULL
                 }
-                get <- function() x
-                setinv <- function(inv) m <<- inv
-                getinv <- function() m
-                list(set = set, get = get,
-                     setinv = setinv,
-                     getinv = getinv)
-        
+                # returns matrix
+                get <- function() { 
+                        x 
+                } 
+                # store in cache
+                setinv <- function(inv) { 
+                        m <<- inv
+                } 
+                # return the chached inverse
+                getinv <- function() { 
+                        m
+                } 
+                list(set = set, get = get, setinv = setinv, getinv = getinv)        
 }
 
 
@@ -25,13 +29,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
               
-       m <- x$getinv()
+       m <- x$getinv() #get cached data
+       
        if(!is.null(m)) {
                         message("getting cached data")
                         return(m)
                 }
                 data <- x$get()
-                m <- solve(data, ...)
+                m <- solve(data,...)
                 x$setinv(m)
                 m
         }
@@ -39,4 +44,6 @@ cacheSolve <- function(x, ...) {
         
 # debugcode
 #dummy matrix for testing 
-test<-matrix(c(1,2,1,2), nrow=2,ncol=2, byrow=TRUE)
+#test<-matrix(c(1,2,1,2), nrow=2,ncol=2)
+#summary(test)
+#test$get()
